@@ -17,6 +17,7 @@ class HomeViewModel @Inject constructor(
 
     private val tag = "HomeViewModel"
 
+    /**
     val isConnected = networkMonitor
         .isConnected
         .onEach { value ->
@@ -26,6 +27,18 @@ class HomeViewModel @Inject constructor(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = true
+        )
+    */
+
+    val isConnected = networkMonitor
+        .isInternetAvailable
+        .onEach { value ->
+            Log.d(tag, ": isInternetAvailable = $value")
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = false
         )
 
 }
